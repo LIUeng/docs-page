@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HtmlWepbackPlugin 源码分析 | 学习笔记</title>
+    <meta name="description" content="Learning Docs by LIUeng" />
+    <link rel="icon" href="/ent-docs/logo.ico">  <link rel="preload" href="/ent-docs/assets/css/0.styles.3bb58c56.css" as="style"><link rel="preload" href="/ent-docs/assets/js/app.cb8a79a7.js" as="script"><link rel="preload" href="/ent-docs/assets/js/2.791e7058.js" as="script"><link rel="preload" href="/ent-docs/assets/js/16.5c19fa88.js" as="script"><link rel="prefetch" href="/ent-docs/assets/js/10.b7b4912c.js"><link rel="prefetch" href="/ent-docs/assets/js/11.ad249abb.js"><link rel="prefetch" href="/ent-docs/assets/js/12.abd76b24.js"><link rel="prefetch" href="/ent-docs/assets/js/13.f0a63076.js"><link rel="prefetch" href="/ent-docs/assets/js/14.f7ef194e.js"><link rel="prefetch" href="/ent-docs/assets/js/15.45b1c447.js"><link rel="prefetch" href="/ent-docs/assets/js/17.86a9d73a.js"><link rel="prefetch" href="/ent-docs/assets/js/18.53ccf749.js"><link rel="prefetch" href="/ent-docs/assets/js/19.9c2d1b7d.js"><link rel="prefetch" href="/ent-docs/assets/js/20.ffcf0ee0.js"><link rel="prefetch" href="/ent-docs/assets/js/21.723e772d.js"><link rel="prefetch" href="/ent-docs/assets/js/22.a640b4a0.js"><link rel="prefetch" href="/ent-docs/assets/js/23.e78c27d6.js"><link rel="prefetch" href="/ent-docs/assets/js/24.c5f8d224.js"><link rel="prefetch" href="/ent-docs/assets/js/25.a085b9a6.js"><link rel="prefetch" href="/ent-docs/assets/js/26.0d935afd.js"><link rel="prefetch" href="/ent-docs/assets/js/27.796c68ea.js"><link rel="prefetch" href="/ent-docs/assets/js/28.164b28de.js"><link rel="prefetch" href="/ent-docs/assets/js/29.1422cf46.js"><link rel="prefetch" href="/ent-docs/assets/js/3.866f7336.js"><link rel="prefetch" href="/ent-docs/assets/js/30.03982151.js"><link rel="prefetch" href="/ent-docs/assets/js/31.6e3e11ca.js"><link rel="prefetch" href="/ent-docs/assets/js/32.e4b04cc4.js"><link rel="prefetch" href="/ent-docs/assets/js/33.5ef7eced.js"><link rel="prefetch" href="/ent-docs/assets/js/34.95595da8.js"><link rel="prefetch" href="/ent-docs/assets/js/35.3e0058c0.js"><link rel="prefetch" href="/ent-docs/assets/js/36.31028fba.js"><link rel="prefetch" href="/ent-docs/assets/js/37.64726b7b.js"><link rel="prefetch" href="/ent-docs/assets/js/38.959474fb.js"><link rel="prefetch" href="/ent-docs/assets/js/39.e425f96d.js"><link rel="prefetch" href="/ent-docs/assets/js/4.fb752034.js"><link rel="prefetch" href="/ent-docs/assets/js/40.f1f2b77e.js"><link rel="prefetch" href="/ent-docs/assets/js/41.8282be7f.js"><link rel="prefetch" href="/ent-docs/assets/js/42.84b96a74.js"><link rel="prefetch" href="/ent-docs/assets/js/43.cd743f60.js"><link rel="prefetch" href="/ent-docs/assets/js/44.2e47973a.js"><link rel="prefetch" href="/ent-docs/assets/js/45.dcb08d44.js"><link rel="prefetch" href="/ent-docs/assets/js/46.11e5d2b2.js"><link rel="prefetch" href="/ent-docs/assets/js/47.c8496480.js"><link rel="prefetch" href="/ent-docs/assets/js/48.9ce9e906.js"><link rel="prefetch" href="/ent-docs/assets/js/49.ced280bb.js"><link rel="prefetch" href="/ent-docs/assets/js/5.d1b68b9b.js"><link rel="prefetch" href="/ent-docs/assets/js/50.af9c2be8.js"><link rel="prefetch" href="/ent-docs/assets/js/6.4156ec29.js"><link rel="prefetch" href="/ent-docs/assets/js/7.0812bd3b.js"><link rel="prefetch" href="/ent-docs/assets/js/8.aff490b4.js"><link rel="prefetch" href="/ent-docs/assets/js/9.e72fba2b.js"> <link rel="stylesheet" href="/ent-docs/assets/css/0.styles.3bb58c56.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/ent-docs/" class="home-link router-link-active"><!----> <span class="site-name">学习笔记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/ent-docs/just-do-it/" class="nav-link">笔记</a></div><div class="nav-item"><a href="/ent-docs/article/" class="nav-link router-link-active">我的文章</a></div><div class="nav-item"><a href="/ent-docs/bigfish/" class="nav-link">Bigfish</a></div><div class="nav-item"><a href="/ent-docs/alogrithm/" class="nav-link">数据结构与算法</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="source code" class="dropdown-title"><span class="title">源码阅读</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/ent-docs/source-code/react/" class="nav-link">React</a></li><li class="dropdown-item"><!----> <a href="/ent-docs/source-code/vue/" class="nav-link">Vue</a></li></ul></div></div><div class="nav-item"><a href="/ent-docs/markdown/" class="nav-link">EDIT</a></div><div class="nav-item"><a href="https://www.github.com/LIUeng" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/ent-docs/just-do-it/" class="nav-link">笔记</a></div><div class="nav-item"><a href="/ent-docs/article/" class="nav-link router-link-active">我的文章</a></div><div class="nav-item"><a href="/ent-docs/bigfish/" class="nav-link">Bigfish</a></div><div class="nav-item"><a href="/ent-docs/alogrithm/" class="nav-link">数据结构与算法</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="source code" class="dropdown-title"><span class="title">源码阅读</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/ent-docs/source-code/react/" class="nav-link">React</a></li><li class="dropdown-item"><!----> <a href="/ent-docs/source-code/vue/" class="nav-link">Vue</a></li></ul></div></div><div class="nav-item"><a href="/ent-docs/markdown/" class="nav-link">EDIT</a></div><div class="nav-item"><a href="https://www.github.com/LIUeng" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>我的文章</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/ent-docs/article/" class="sidebar-link">简介</a></li><li><a href="/ent-docs/article/git.html" class="sidebar-link">GIT</a></li><li><a href="/ent-docs/article/eslint.html" class="sidebar-link">ESLint</a></li><li><a href="/ent-docs/article/typescript.html" class="sidebar-link">Typescript 基础</a></li><li><a href="/ent-docs/article/docs.html" class="sidebar-link">前端文档</a></li><li><a href="/ent-docs/article/history.html" class="sidebar-link">History API</a></li><li><a href="/ent-docs/article/scriptLink.html" class="sidebar-link">Script Link 标签</a></li><li><a href="/ent-docs/article/ecs.html" class="sidebar-link">云服务器ECS</a></li><li><a href="/ent-docs/article/transitionAnimation.html" class="sidebar-link">CSSJS动画那些事</a></li><li><a href="/ent-docs/article/mutationObserver.html" class="sidebar-link">MutationObserver</a></li><li><a href="/ent-docs/article/devServer.html" class="sidebar-link">实现一个简易热更新</a></li><li><a href="/ent-docs/article/virtualList.html" class="sidebar-link">PC虚拟列表如何处理</a></li><li><a href="/ent-docs/article/domEvents.html" class="sidebar-link">DOM BOM 事件流</a></li><li><a href="/ent-docs/article/htmlWebpackPlugin.html" class="active sidebar-link">HtmlWepbackPlugin 源码分析</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/ent-docs/article/htmlWebpackPlugin.html#简易的写一个-hwp-插件" class="sidebar-link">简易的写一个 HWP 插件</a></li><li class="sidebar-sub-header"><a href="/ent-docs/article/htmlWebpackPlugin.html#hwp-源码实现" class="sidebar-link">HWP 源码实现</a></li><li class="sidebar-sub-header"><a href="/ent-docs/article/htmlWebpackPlugin.html#动手实现一个-hwp-插件" class="sidebar-link">动手实现一个 HWP 插件</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="htmlwepbackplugin-源码分析"><a href="#htmlwepbackplugin-源码分析" class="header-anchor">#</a> HtmlWepbackPlugin 源码分析</h1> <p><strong>注：本文中 HWP 即 html-webpack-plugin 缩写</strong></p> <p><code>html-webpack-plugin插件实现代码还是挺复杂的，需要与webpack源码配合起来，有兴趣可以查看webpack源码</code></p> <hr> <h2 id="简易的写一个-hwp-插件"><a href="#简易的写一个-hwp-插件" class="header-anchor">#</a> 简易的写一个 HWP 插件</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 关于如何把webpack的输出文件注入到模板文件当中
+ * 自己注入标签，无任何副作用，自由实现
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">HWP</span> <span class="token punctuation">{</span>
+  <span class="token function">apply</span><span class="token punctuation">(</span><span class="token parameter">compiler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    compiler<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>emit<span class="token punctuation">.</span><span class="token function">tapAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">compilation<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> html <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+        &lt;!DOCTYPE html&gt;
+        &lt;html lang=&quot;en&quot;&gt;
+        &lt;head&gt;
+            &lt;meta charset=&quot;UTF-8&quot;&gt;
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+            &lt;title&gt;Document&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+            &lt;!-- script here --&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+      </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+
+      compilation<span class="token punctuation">.</span>assets<span class="token punctuation">[</span><span class="token string">'index.html'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token function">source</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> html<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> html<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+      <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="简易实现问题"><a href="#简易实现问题" class="header-anchor">#</a> 简易实现问题</h3> <blockquote><p>利用了主 compiler，每次编译时都触发主 compiler emit 钩子，代价有点大</p></blockquote> <p>HWP 优化处理 =&gt; 🍵 加入缓存处理，模板内容不改变，不再继续又生成一遍 index.html</p> <blockquote><p>未能实时监听模板文件的改变</p></blockquote> <p>HWP 优化处理 =&gt; 🍵 引入 compiler 钩子中的 thiscompilation，把模板文件加入进去</p> <blockquote><p>如何使用额外的 compiler 创建的子 compiler 进行优化</p></blockquote> <p>HWP 优化处理 =&gt; 🍵 引入 compilatoin 对象的 createChildCompiler 方法，这个在 thiscompilation 钩子中实现</p> <hr> <h2 id="hwp-源码实现"><a href="#hwp-源码实现" class="header-anchor">#</a> HWP 源码实现</h2> <h3 id="webpack-配置"><a href="#webpack-配置" class="header-anchor">#</a> Webpack 配置</h3> <p><code>html-webpack-plugin使用在webpack配置中</code></p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...,</span>
+  plugins<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token comment">// html-webpack-plugin 常用配置</span>
+    <span class="token keyword">new</span> <span class="token class-name">HtmlWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token comment">/* 输出文件名 */</span>
+      filename<span class="token punctuation">:</span> <span class="token string">'index.html'</span><span class="token punctuation">,</span>
+      <span class="token comment">/* 模板地址 */</span>
+      template<span class="token punctuation">:</span> <span class="token comment">/* 绝对路径地址 */</span><span class="token punctuation">,</span>
+      <span class="token comment">/* script 标签插入位置 */</span>
+      inject<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">/* 'body' | 'head' */</span>
+      <span class="token comment">/* 文档标题 document.title */</span>
+      title<span class="token punctuation">:</span>  <span class="token comment">/* &lt;title&gt;&lt;%= htmlWebpackPlugin.options.title %&gt;&lt;/title&gt; */</span><span class="token punctuation">,</span>
+      <span class="token comment">/* link rel=&quot;icon&quot; */</span>
+      favicon<span class="token punctuation">:</span> <span class="token comment">/* 绝对路径icon地址 */</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// ...,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="写一个-webpack-插件"><a href="#写一个-webpack-插件" class="header-anchor">#</a> 写一个 Webpack 插件</h3> <p><a href="https://webpack.js.org/contribute/writing-a-plugin/" target="_blank" rel="noopener noreferrer">webpack 写插件<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">HtmlWebpackPlugin</span> <span class="token punctuation">{</span>
+  <span class="token function">apply</span><span class="token punctuation">(</span><span class="token parameter">compiler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// handle here</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="使用到的-webpack-compiler"><a href="#使用到的-webpack-compiler" class="header-anchor">#</a> 使用到的 webpack compiler</h3> <p><code>HWP 使用到的compiler hooks以及它使用在插件中的作用</code></p> <h4 id="compiler-hooks-thiscompilation"><a href="#compiler-hooks-thiscompilation" class="header-anchor">#</a> compiler.hooks.thisCompilation</h4> <p><code>thisCompilation hook 做了以下操作</code></p> <ul><li><p>😡thisCompilation.tap('HWP', compilation)这里把模板文件 index.html 加入到编译当中，并且实时监听编译模板</p></li> <li><p>😡 创建 childCompiler</p></li> <li><p>😡 注意：thisCompilation hook 写了 loader 处理 index.html 文件</p></li> <li><p>😡 加入入口文件：/xxx/inde.html!(loader 地址)，这种形式可以通过自定义的 loader 处理 index.html，返回 index.html webpack 编译后的内容</p> <ul><li><p>compilation.hooks.additionalChunkAssets.tap()</p> <ul><li>😡 把 childCompiler 中的文件加入到主 compiler 中去</li></ul></li></ul></li></ul> <h4 id="compiler-hooks-make"><a href="#compiler-hooks-make" class="header-anchor">#</a> compiler.hooks.make</h4> <p><code>make hook 做了以下操作</code></p> <ul><li><p>😡make.tapAsync(compilation, callback)在 compilation 完成之前执行</p></li> <li><p>😡 开始编译，在编译中作缓存变量处理，同时返回编译模板返回的资源内容</p></li></ul> <h4 id="compiler-hooks-emit"><a href="#compiler-hooks-emit" class="header-anchor">#</a> compiler.hooks.emit</h4> <p><code>emit hook 做了以下操作</code></p> <ul><li><p>😡emit.tapAsync(compilation, callback)这里处理输出文件到 webpack 配置的 output 文件夹</p></li> <li><p>😡 引入 tapable 事件流机制，加入 hooks 到 compilation 对象中，为了 html-webpack-plugin 的灵活性，引入其他第三方插件</p></li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> AsyncSeriesWaterfallHook <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'tapable'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>AsyncSeriesWaterfallHook<span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">createHtmlWebpackPluginHooks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token comment">// script｜link｜X 标签 资源文件 产生之前</span>
+    beforeAssetTagGeneration<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 改变 标签｜资源文件｜favicon</span>
+    alterAssetTags<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 改变生成标签组</span>
+    alterAssetTagGroups<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 在模板处理之后</span>
+    afterTemplateExecution<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 模板文件生成之前</span>
+    beforeEmit<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 模板文件生成之后</span>
+    afterEmit<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">AsyncSeriesWaterfallHook</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'pluginArgs'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="hwp-创建一个子解析器-childcompiler"><a href="#hwp-创建一个子解析器-childcompiler" class="header-anchor">#</a> HWP 创建一个子解析器 childCompiler</h3> <blockquote><p><code>HWP 没有直接使用webpack插件提供的主compiler，而是利用compilation object创建了一个childCompiler</code></p></blockquote> <h4 id="createchildcompiler"><a href="#createchildcompiler" class="header-anchor">#</a> CreateChildCompiler</h4> <blockquote><p><code>webpack允许创建一个webpack compiler子实例，并且支持运行，可以有不同的配置，与主compiler类似相同的api</code></p></blockquote> <ul><li><p>webpack compilation object</p> <p>👀createChildCompiler(name, ouputOptions, plugins)</p></li></ul> <h2 id="动手实现一个-hwp-插件"><a href="#动手实现一个-hwp-插件" class="header-anchor">#</a> 动手实现一个 HWP 插件</h2> <p>🦐🦐🦐 解释性代码如下 源码可以点击下方链接</p> <p><a href="https://github.com/jantimon/html-webpack-plugin" target="_blank" rel="noopener noreferrer">html-webpck-plugin 源码移步这里<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <h3 id="创建-childcompiler"><a href="#创建-childcompiler" class="header-anchor">#</a> 创建 childCompiler</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * if 假设（这里为了配置部分代码展示）
+ * template绝对地址为：template = /A/B/C/public/index.html
+ * loader绝对地址为：loader = /A/B/HWP/utils/loader.js
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">HWP</span> <span class="token punctuation">{</span>
+  <span class="token function">apply</span><span class="token punctuation">(</span><span class="token parameter">compiler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 模板 + loader</span>
+    <span class="token keyword">const</span> fullTemplate <span class="token operator">=</span> <span class="token string">'/A/B/C/public/index.html!/A/B/HWP/utils/loader.js'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">let</span> childCompiler<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> compileTmplatePromise <span class="token operator">=</span> compiler<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>thisCompilation<span class="token punctuation">.</span><span class="token function">tapAsync</span><span class="token punctuation">(</span>
+      <span class="token punctuation">(</span><span class="token parameter">compilation<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 把模板文件加入到compiler编译文件队列中</span>
+        <span class="token comment">// 加入模板文件入口</span>
+        <span class="token keyword">new</span> <span class="token class-name">require</span><span class="token punctuation">(</span><span class="token string">'webpack/lib/SingleEntryPlugin'</span><span class="token punctuation">)</span><span class="token punctuation">(</span>
+          compilation<span class="token punctuation">.</span>compiler<span class="token punctuation">.</span>context<span class="token punctuation">,</span>
+          fullTemplate<span class="token punctuation">,</span>
+          <span class="token string">'name'</span>
+        <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>childCompiler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        childCompiler <span class="token operator">=</span> compilation<span class="token punctuation">.</span><span class="token function">createChildCompiler</span><span class="token punctuation">(</span><span class="token string">'compilerName'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+          filename<span class="token punctuation">:</span> <span class="token string">'xxx-[name]'</span><span class="token punctuation">,</span>
+          publicPath<span class="token punctuation">:</span> compilation<span class="token punctuation">.</span>outputOptions<span class="token punctuation">.</span>publicPath
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 开始编译添加的入口文件</span>
+        <span class="token comment">/**
+         * @param {Error} err first 错误
+         * @param {Object} entries 编译入口文件结果资源
+         * @param {Object} childCompilaton compilation 对象
+         */</span>
+        childCompiler<span class="token punctuation">.</span><span class="token function">runAsChild</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> entries<span class="token punctuation">,</span> childCompilaton</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 入口编译之后文件 index.html + loader 处理之后</span>
+          <span class="token comment">// 得到entries编译结果</span>
+          <span class="token comment">// 处理entries</span>
+          <span class="token comment">// handleEntries = () &gt; {}</span>
+          <span class="token keyword">const</span> compiledTemplate <span class="token operator">=</span> <span class="token function">handleEntries</span><span class="token punctuation">(</span>entries<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 代码不能运行 请移步HWP源码</span>
+          <span class="token keyword">return</span> <span class="token function">Promise</span><span class="token punctuation">(</span>compiledTemplate<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="index-html-解析器-loader"><a href="#index-html-解析器-loader" class="header-anchor">#</a> index.html 解析器 loader</h3> <p><a href="https://webpack.js.org/contribute/writing-a-loader/" target="_blank" rel="noopener noreferrer">webpack 如何写一个 loader<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// loader 是一个函数</span>
+<span class="token comment">// webpack.config.js</span>
+<span class="token comment">// 示例1 这是一种配置</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  resolve<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    rule<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        test<span class="token punctuation">:</span> <span class="token regex">/\.html$/</span><span class="token punctuation">,</span>
+        loader<span class="token punctuation">:</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../../loader.js'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">// 示例2 loader</span>
+<span class="token comment">// 这种方法webpack会解析入口文件中的loader并解析</span>
+<span class="token comment">// 引入最好使用绝对地址</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'index.html!loader.js'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 开始写一个loader</span>
+module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">source</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// source 即配置匹配的文件返回的utf-8字符串</span>
+  <span class="token comment">// source 自由处理规则</span>
+  <span class="token keyword">return</span> source<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="开始注入-js-css-favicon-文件"><a href="#开始注入-js-css-favicon-文件" class="header-anchor">#</a> 开始注入 js css favicon 文件</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// emit hooks compilation</span>
+compilation<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>emit<span class="token punctuation">.</span><span class="token function">tapAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">compilation<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// compileTmplatePromise</span>
+  <span class="token comment">// 插件如何处理favicon js css自由处理</span>
+  <span class="token comment">// 可以自行参考源码</span>
+  compileTmplatePromise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">html</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 自由匹配规则插入到index.html模板中</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="title-如何注入到-index-html-中"><a href="#title-如何注入到-index-html-中" class="header-anchor">#</a> title 如何注入到 index.html 中</h3> <p>模板文件</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>en<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>UTF-8<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>viewport<span class="token punctuation">&quot;</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>width=device-width, initial-scale=1.0<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>&lt;%= htmlWebpackPlugin.options.title %&gt;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="nodejs-vm-模块"><a href="#nodejs-vm-模块" class="header-anchor">#</a> NodeJS VM 模块</h4> <p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/vm.html" target="_blank" rel="noopener noreferrer">关于 nodejs vm 模块<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> vm <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'vm'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// html-webpack-plugin 利用nodejs vm模块</span>
+<span class="token comment">// vm 提供一个执行js环境</span>
+<span class="token comment">// index.html + loader 编译 代码示例如下</span>
+<span class="token comment">// 这里loader参照html-webpack-plugin/lib/loader.js</span>
+<span class="token keyword">function</span> <span class="token function">ex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">eval</span><span class="token punctuation">(</span>
+    <span class="token string">'module.exports = function (templateParams) { with(templateParams) {return (function(data) {\nvar __t, __p = \'\';\n__p += \'&lt;!DOCTYPE html&gt;\\n&lt;html lang=&quot;en&quot;&gt;\\n&lt;head&gt;\\n    &lt;meta charset=&quot;UTF-8&quot;&gt;\\n    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;\\n    &lt;title&gt;\' +\n((__t = ( htmlWebpackPlugin.options.title )) == null ? \'\' : __t) +\n\'&lt;/title&gt;\\n&lt;/head&gt;\\n&lt;body&gt;\\n    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;\\n&lt;/body&gt;\\n&lt;/html&gt;\';\nreturn __p\n})();}}\n\n//# sourceURL=webpack:///./public/index.html?./plugins/html-webpack-plugin/utils/loader.js'</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token function">ex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> template <span class="token operator">=</span> <span class="token string">'/A/B/C/public/index.html'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// vm</span>
+<span class="token keyword">const</span> vmContext <span class="token operator">=</span> vm<span class="token punctuation">.</span><span class="token function">createContext</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token constant">HTML_WEBPACK_PLUGIN</span><span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> vmScript <span class="token operator">=</span> vm<span class="token punctuation">.</span><span class="token function">Script</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> <span class="token punctuation">{</span> filename<span class="token punctuation">:</span> template <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 这里得到一个函数</span>
+<span class="token keyword">const</span> newSource <span class="token operator">=</span> vmScript<span class="token punctuation">.</span><span class="token function">runInContext</span><span class="token punctuation">(</span>vmScript<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// newSource 执行 eval 代码</span>
+<span class="token keyword">let</span> html <span class="token operator">=</span> <span class="token function">newSource</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  templateParams<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    htmlWebpackPlugin<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      options<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> <span class="token string">'HELLO WORLD'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 得到结果</span>
+<span class="token comment">/*
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;HELLO WORLD&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+ */</span>
+</code></pre></div><hr> <p>关于许多细节点没有处理，可以自行参考 html-webpack-plugin 源码，特别是缓存处理</p> <ul><li>html-webpack-plugin 缓存优化点很多</li> <li>能跑一次绝不多跑（编译结果）</li></ul> <p>如有理解不对，欢迎交流指正 👏👏👏</p> <hr></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2020-6-21 23:54:56</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/ent-docs/article/domEvents.html" class="prev">DOM BOM 事件流</a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/ent-docs/assets/js/app.cb8a79a7.js" defer></script><script src="/ent-docs/assets/js/2.791e7058.js" defer></script><script src="/ent-docs/assets/js/16.5c19fa88.js" defer></script>
+
+    <!-- Google Analytics -->
+    <script>
+      window.ga =
+        window.ga ||
+        function() {
+          (ga.q = ga.q || []).push(arguments);
+        };
+      ga.l = +new Date();
+      ga('create', 'UA-156116652-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    <!-- End Google Analytics -->
+  </body>
+</html>
