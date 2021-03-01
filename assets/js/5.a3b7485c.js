@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{276:function(n,e,a){"use strict";a.r(e);var i={name:"affix",render:function(){var n=arguments[0];return n("div",[n("span",["hello affix"])])}},o=a(0),l=Object(o.a)(i,void 0,void 0,!1,null,null,null);e.default=l.exports}}]);
